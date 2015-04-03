@@ -12,6 +12,31 @@ class PropertyConditionsController extends AppController
 {
 
     /**
+     * Calc method
+     *
+     * @return void Redirects on successful add, renders view otherwise.
+     */
+    public function calc()
+    {
+        $propertyCondition = $this->PropertyConditions->newEntity();
+/*
+        if ($this->request->is('post')) {
+            $propertyCondition = $this->PropertyConditions->patchEntity($propertyCondition, $this->request->data);
+            if ($this->PropertyConditions->save($propertyCondition)) {
+                $this->Flash->success('The property condition has been saved.');
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error('The property condition could not be saved. Please, try again.');
+            }
+        }
+*/
+        $rentalProperties = $this->PropertyConditions->RentalProperties->find('list', ['limit' => 200]);
+        $this->set(compact('propertyCondition', 'rentalProperties'));
+        $this->set('_serialize', ['propertyCondition']);
+    }
+
+
+    /**
      * Index method
      *
      * @return void
