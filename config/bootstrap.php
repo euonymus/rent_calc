@@ -193,3 +193,6 @@ if (Configure::read('debug')) {
 DispatcherFactory::add('Asset');
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
+
+// Added by euonymus
+require_once ROOT . DS . 'vendor' . DS . 'euonymus' . DS . 'U.php';

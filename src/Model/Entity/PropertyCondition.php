@@ -35,4 +35,48 @@ class PropertyCondition extends Entity
         'status' => true,
         'rental_property' => true,
     ];
+
+    public static $taxIncludeds = array(
+        'renewal_extra_fee',
+        'broker_commission',
+        'key_replacement_cost',
+    );
+
+    const TAX_RATE = 1.08;
+
+    /****************************************************************************/
+    /* Calculation                                                              */
+    /****************************************************************************/
+    public static function calcInitialCost($data) {
+      if (!\Euonymus\U::arrPrepared('rent', $data)
+	  || !\Euonymus\U::arrPrepared('deposit', $data)
+	  || !\Euonymus\U::arrPrepared('thanx_fee', $data)
+	  || !\Euonymus\U::arrPrepared('initial_guarantee_charge', $data)
+	  || !\Euonymus\U::arrPrepared('broker_commission', $data)
+	  || !\Euonymus\U::arrPrepared('key_replacement_cost', $data)
+	  || !\Euonymus\U::arrPrepared('free_rent', $data)
+	  ) {
+	return false;
+      }
+
+      $withouttax = $data['deposit'] + $data['thanx_fee'] + $data['initial_guarantee_charge'];
+      $withtax    = $data['broker_commission'] * self::TAX_RATE;
+      $key_cost   = $data['key_replacement_cost'] * self::TAX_RATE;
+      $ret = ($data['rent'] * ($withouttax + $withtax - $data['free_rent'])) + $key_cost + $data['insurance_fee'];
+      $monthly = self::calcMonthlyCost($data, false);
+      $ret += $monthly;
+      return $ret;
+    }
+
+    public static function calcMonthlyCost($data, $withParkings = true) {
+      if (!\Euonymus\U::arrPrepared('rent', $data)
+	  || !\Euonymus\U::arrPrepared('common_fee', $data)
+	  || !\Euonymus\U::arrPrepared('parking', $data)
+	  || !\Euonymus\U::arrPrepared('bicycle', $data)
+	  ) {
+	return false;
+      }
+      $semitotal = $data['rent'] + $data['common_fee'];
+      return $withParkings ? $semitotal + $data['parking'] + $data['bicycle'] : $semitotal;
+    }
 }
