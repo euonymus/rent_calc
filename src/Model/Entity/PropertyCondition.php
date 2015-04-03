@@ -47,6 +47,16 @@ class PropertyCondition extends Entity
     /****************************************************************************/
     /* Calculation                                                              */
     /****************************************************************************/
+    public static function buildCalculated($data) {
+      return array(
+		   'initial' => self::calcInitialCost($data),
+		   'virtual_monthly' => self::calcVirtualMonthlyCost($data),
+		   'monthly' => self::calcMonthlyCost($data),
+		   'yearly' => self::calcYearlyCost($data),
+		   'renewally' => self::calcRenewalCost($data)
+      );
+    }
+
     public static function calcInitialCost($data) {
       if (!\Euonymus\U::arrPrepared('rent', $data)
 	  || !\Euonymus\U::arrPrepared('deposit', $data)
@@ -65,7 +75,14 @@ class PropertyCondition extends Entity
       $ret = ($data['rent'] * ($withouttax + $withtax - $data['free_rent'])) + $key_cost + $data['insurance_fee'];
       $monthly = self::calcMonthlyCost($data, false);
       $ret += $monthly;
-      return $ret;
+      return ceil($ret);
+    }
+
+    public static function calcVirtualMonthlyCost($data) {
+      $monthly = self::calcMonthlyCost($data);
+      $yearly = self::calcYearlyCost($data);
+      $renewal = self::calcRenewalCost($data);
+      return $monthly + ceil($yearly / 12) + ceil($renewal / 24);
     }
 
     public static function calcMonthlyCost($data, $withParkings = true) {
@@ -79,4 +96,27 @@ class PropertyCondition extends Entity
       $semitotal = $data['rent'] + $data['common_fee'];
       return $withParkings ? $semitotal + $data['parking'] + $data['bicycle'] : $semitotal;
     }
+
+    public static function calcYearlyCost($data) {
+      if (!\Euonymus\U::arrPrepared('rent', $data)
+	  || !\Euonymus\U::arrPrepared('annual_guarantee_charge', $data)
+	  ) {
+	return false;
+      }
+      return ceil($data['rent'] * $data['annual_guarantee_charge']);
+    }
+
+    public static function calcRenewalCost($data) {
+      if (!\Euonymus\U::arrPrepared('rent', $data)
+	  || !\Euonymus\U::arrPrepared('renewal_fee', $data)
+	  || !\Euonymus\U::arrPrepared('renewal_extra_fee', $data)
+	  || !\Euonymus\U::arrPrepared('insurance_fee', $data)
+	  ) {
+	return false;
+      }
+      return ceil($data['rent'] * $data['renewal_fee'])
+             + ceil($data['rent'] * $data['renewal_extra_fee'] * self::TAX_RATE)
+             + $data['insurance_fee'];
+    }
+    
 }

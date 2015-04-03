@@ -20,12 +20,9 @@ class PropertyConditionsController extends AppController
     {
         $propertyCondition = $this->PropertyConditions->newEntity();
         if ($this->request->is('post')) {
-
-
-	  $propertyCondition->calcInitialCost($this->request->data);
-
-	  $propertyCondition = $this->PropertyConditions->patchEntity($propertyCondition, $this->request->data);
+	  pr($propertyCondition->buildCalculated($this->request->data));
 /*
+	  $propertyCondition = $this->PropertyConditions->patchEntity($propertyCondition, $this->request->data);
             if ($this->PropertyConditions->save($propertyCondition)) {
                 $this->Flash->success('The property condition has been saved.');
                 return $this->redirect(['action' => 'index']);
