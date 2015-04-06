@@ -1,0 +1,31 @@
+.container {
+  background: #fff;
+}
+#alert {
+  display: none;
+}
+#sl2 {
+  width: 400px;
+}
+#RC .slider-selection {
+  background: #FF8282;
+}
+#RC .slider-handle {
+  background: red;
+}
+#GC .slider-selection {
+  background: #428041;
+}
+#GC .slider-handle {
+  background: green;
+}
+#BC .slider-selection {
+  background: #8283FF;
+}
+#BC .slider-handle {
+  border-bottom-color: blue;
+}
+#eg .slider-selection {
+  background: #BABABA;
+}
+

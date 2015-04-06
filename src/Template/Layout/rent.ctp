@@ -23,6 +23,9 @@
     <!-- Original -->
     <?= $this->Html->css('generic.css') ?>
 
+    <?= $this->fetch('meta') ?>
+    <?= $this->fetch('css') ?>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js does not work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -30,8 +33,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
 </head>
 <body>
     <header>
