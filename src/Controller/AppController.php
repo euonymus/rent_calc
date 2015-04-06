@@ -26,6 +26,7 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    public $layout = 'rent';
 
     /**
      * Initialization hook method.
