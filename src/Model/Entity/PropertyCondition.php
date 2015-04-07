@@ -47,7 +47,12 @@ class PropertyCondition extends Entity
     /****************************************************************************/
     /* Calculation                                                              */
     /****************************************************************************/
-    public static function buildCalculated($data) {
+    public static function buildCalculated($data, $strict = false) {
+      if (!$strict) {
+	foreach (['parking','bicycle'] as $field) {
+	  if (!\Euonymus\U::arrPrepared($field, $data)) $data[$field] = 0;
+	}
+      }
       return array(
 		   'initial' => self::calcInitialCost($data),
 		   'virtual_monthly' => self::calcVirtualMonthlyCost($data),
