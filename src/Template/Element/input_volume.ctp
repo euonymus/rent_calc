@@ -13,15 +13,6 @@
 
 <? $this->Html->scriptStart(['block' => true]) ?>
 var rentSlider = (function(exports) {
-
-
-    /* exports.setData = function(data) { */
-    /*   aaa = $(data).val(); */
-    /*   alert(aaa); */
-
-    /*   /\* $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')') *\/ */
-    /*   /\* alert(1); *\/ */
-    /* }; */
     exports.initInputVolume = function() {
 	// Bind handler to numeric inputs
 	$(".volume-slider").each(function(){
@@ -32,14 +23,13 @@ var rentSlider = (function(exports) {
 	});
 	// Initialize comma-separated-input-text from the hidden field.
 	$(".volume-slider").each(function(){
-	    var num = $(this).data('slider').getValue();
-            $(this).closest(".volume-slider-set").find('.volume-slider-input').val(num);
+	    var num = $(this).closest(".volume-slider-set").find('.volume-slider-input').val();
+	    $(this).data('slider').setValue(num);
 	});
     };
 
+    exports.initInputVolume();
+
     return exports;
 })({});
-$(function(){
-    rentSlider.initInputVolume();
-});
 <? $this->Html->scriptEnd() ?>
