@@ -12,14 +12,8 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-3">
-                <?= $this->Form->input('deposit') ?>
-            </div>
-            <div class="col-xs-9">
-                <?= $this->element('volume_slider') ?>
-            </div>
-        </div>
+        <?= $this->element('input_volume', array('inputName' => 'deposit')) ?>
+
         <?= $this->Form->input('thanx_fee') ?>
         <?= $this->Form->input('initial_guarantee_charge') ?>
         <?= $this->Form->input('broker_commission') ?>

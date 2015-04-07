@@ -1,16 +1,18 @@
+<? $this->Html->script('bootstrap-slider.js', array('block' => true)) ?>
 <? $this->Html->css('slider.css', array('block' => true)) ?>
 <? $this->Html->css('volume-slider.css', array('block' => true)) ?>
-<? $this->Html->script('bootstrap-slider.js', array('block' => true)) ?>
+<?
 
+?>
 
 <? $this->Html->scriptStart(['block' => true]) ?>
   $(function(){
-        var RGBChange = function() {
+        var <?= $callback ?> = function() {
 	  //          $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
         };
 
-        var r = $('#R').slider()
-                .on('slide', RGBChange)
+        var r = $('#<?= $inputId ?>').slider()
+                .on('slide', <?= $callback ?>)
                 .data('slider');
 
   });
@@ -18,7 +20,7 @@
 
 
 <input type="text" class="span2" value=""
-    id="R"
+    id="<?= $inputId ?>"
     data-slider-id="RC"
     data-slider-min="0"
     data-slider-max="3"
