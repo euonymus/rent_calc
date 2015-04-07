@@ -13,17 +13,16 @@
         </div>
 
         <?= $this->element('input_volume', array('inputName' => 'deposit')) ?>
-
-        <?= $this->Form->input('thanx_fee') ?>
-        <?= $this->Form->input('initial_guarantee_charge') ?>
-        <?= $this->Form->input('broker_commission') ?>
-        <?= $this->Form->input('free_rent') ?>
+        <?= $this->element('input_volume', array('inputName' => 'thanx_fee')) ?>
+        <?= $this->element('input_volume', array('inputName' => 'initial_guarantee_charge')) ?>
+        <?= $this->element('input_volume', array('inputName' => 'broker_commission')) ?>
+        <?= $this->element('input_volume', array('inputName' => 'free_rent')) ?>
 
         <?= $this->Form->input('key_replacement_cost') ?>
         <?= $this->Form->input('insurance_fee') ?>
 
         <?= $this->Form->input('annual_guarantee_charge') ?>
-        <?= $this->Form->input('renewal_fee') ?>
+        <?= $this->element('input_volume', array('inputName' => 'renewal_fee')) ?>
         <?= $this->Form->input('renewal_extra_fee') ?>
 <? /*
         <?= $this->Form->input('parking') ?>
